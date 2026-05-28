@@ -1,0 +1,19 @@
+meta {
+  name: list products
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base_url}}/merchant/products
+  body: json
+  auth: none
+}
+
+docs {
+  Create a product for the merchant node.
+  
+  Required fields in body:
+  - name (string): Product name
+  - price (number): Product price
+}

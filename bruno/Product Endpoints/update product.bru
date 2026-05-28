@@ -1,0 +1,30 @@
+meta {
+  name: update product
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{base_url}}/merchant/products/:productId
+  body: json
+  auth: none
+}
+
+params:path {
+  productId: 2
+}
+
+body:json {
+  {
+    "name": "Paracetamol 500 mg",
+    "price": 7
+  }
+}
+
+docs {
+  Create a product for the merchant node.
+  
+  Required fields in body:
+  - name (string): Product name
+  - price (number): Product price
+}

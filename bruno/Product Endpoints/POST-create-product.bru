@@ -1,0 +1,26 @@
+meta {
+  name: Create Product
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base_url}}/{{api_version}}/products
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "Coffee",
+    "price": 12
+  }
+}
+
+docs {
+  Create a product for the merchant node.
+
+  Required fields in body:
+  - name (string): Product name
+  - price (number): Product price
+}
