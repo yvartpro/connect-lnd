@@ -6,6 +6,8 @@ const express = require('express');
 const { authenticatedLndGrpc } = require('ln-service');
 const dotenv = require('dotenv');
 const cors = require('cors');
+const productRoutes = require('./src/routes/productRoutes');
+const { initializeDatabase } = require('./src/model');
 
 // Load environment variables from a .env file
 dotenv.config();
@@ -16,6 +18,7 @@ const app = express();
 // --- 2. MIDDLEWARE CONFIGURATION ---
 app.use(cors());
 app.use(express.json());
+app.use('/merchant', productRoutes);
 
 // --- 3. LND CONNECTION SETUP ---
 let lnd; // This will hold our authenticated LND gRPC client
@@ -233,16 +236,31 @@ const PORT = process.env.PORT || 5003;
 
 connectToLnd();
 
-app.listen(PORT, () => {
-    console.log(`API Server using 'ln-service' package is running on http://localhost:${PORT}`);
-    console.log('----------------------------------------------------');
-    console.log('Available Endpoints:');
-    console.log(`- GET    /api/getinfo`);
-    console.log(`- GET    /api/balance`);
-    console.log(`- GET    /api/invoices`);
-    console.log(`- POST   /api/invoice  (Body: { "sats": 1000, "description": "Test" })`);
-    console.log(`- POST   /api/pay      (Body: { "request": "lnbc..." })`);
-    console.log(`- POST   /api/signmessage (Body: { "message": "Hello, LND!" })`);
-    console.log(`- POST   /api/verifymessage (Body: { "message": "Hello, LND!", "signature": "...", "pubkey": "..." })`);
-    console.log('----------------------------------------------------');
-});
+async function startServer() {
+    try {
+        await initializeDatabase();
+
+        app.listen(PORT, () => {
+            console.log(`API Server using 'ln-service' package is running on http://localhost:${PORT}`);
+            console.log('----------------------------------------------------');
+            console.log('Available Endpoints:');
+            console.log(`- GET    /api/getinfo`);
+            console.log(`- GET    /api/balance`);
+            console.log(`- GET    /api/invoices`);
+            console.log(`- POST   /api/invoice  (Body: { "sats": 1000, "description": "Test" })`);
+            console.log(`- POST   /api/pay      (Body: { "request": "lnbc..." })`);
+            console.log(`- POST   /api/signmessage (Body: { "message": "Hello, LND!" })`);
+            console.log(`- POST   /api/verifymessage (Body: { "message": "Hello, LND!", "signature": "...", "pubkey": "..." })`);
+            console.log(`- POST   /api/products  (Body: { "name": "Coffee", "price": 12 })`);
+            console.log(`- GET    /api/products`);
+            console.log(`- PATCH  /api/products/:productId`);
+            console.log(`- DELETE /api/products/:productId`);
+            console.log('----------------------------------------------------');
+        });
+    } catch (error) {
+        console.error('Failed to start server:', error.message);
+        process.exit(1);
+    }
+}
+
+startServer();
