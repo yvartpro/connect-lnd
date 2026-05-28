@@ -1,0 +1,26 @@
+meta {
+  name: Create Invoice
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{base_url}}/{{api_version}}/invoice
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "sats": 1000,
+    "description": "Test Invoice"
+  }
+}
+
+docs {
+  Create a new Lightning invoice.
+  
+  Required fields in body:
+  - sats (number): Amount in satoshis (must be positive)
+  - description (string, optional): Invoice description
+}

@@ -1,0 +1,24 @@
+meta {
+  name: Pay Invoice
+  type: http
+  seq: 5
+}
+
+post {
+  url: {{base_url}}/{{api_version}}/pay
+  body: json
+  auth: none
+}
+
+body:json {
+   {
+    "request": "lnbc..."
+  }
+}
+
+docs {
+  Pay a Lightning invoice (payment request string).
+  
+  Required fields in body:
+  - request (string): BOLT11 invoice string
+}

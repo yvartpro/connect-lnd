@@ -1,0 +1,24 @@
+meta {
+  name: Sign Message
+  type: http
+  seq: 6
+}
+
+post {
+  url: {{base_url}}/{{api_version}}/signmessage
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "message": "Hello, LND!"
+  }
+}
+
+docs {
+  Sign a message with the LND node's private key.
+  
+  Required fields in body:
+  - message (string): Message to sign
+}

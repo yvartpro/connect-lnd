@@ -1,0 +1,13 @@
+meta {
+  name: Get Balance
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base_url}}/{{api_version}}/balance
+}
+
+docs {
+  Get the on-chain and off-chain (channel) balances.
+}

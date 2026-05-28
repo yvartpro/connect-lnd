@@ -1,0 +1,13 @@
+meta {
+  name: Get Node Info
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/{{api_version}}/getinfo
+}
+
+docs {
+  Get general information about the LND node.
+}

@@ -1,0 +1,28 @@
+meta {
+  name: Verify Message
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{base_url}}/{{api_version}}/verifymessage
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "message": "Hello, LND!",
+    "signature": "signature_string_here",
+    "pubkey": "0274b36badf236acbdf23f801557022400cf1cf419f98d5972dcae776b44a1c559"
+  }
+}
+
+docs {
+  Verify a signed message with the LND node's public key.
+  
+  Required fields in body:
+  - message (string): Original message
+  - signature (string): Signature to verify
+  - pubkey (string): Public key for verification
+}
